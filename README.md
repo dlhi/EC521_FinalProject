@@ -1,4 +1,4 @@
-# EC521_FinalProject
+# EC521 Final Project - KODI Vulnerability Detection Platform
 
 ## Authors: Ryan Ewing, Andre Gonzaga, Nicolas Hunt, David Li
 
