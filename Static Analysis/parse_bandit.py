@@ -9,6 +9,9 @@ file = open(filename, "r")
 vuln_ids = []
 sinks = []
 sources = []
+paths =[]
+line_numbers = []
+
 new_id = 0
 for line in file:
     if "Issue" in line:
@@ -42,8 +45,13 @@ for line in file:
         new_id = 0
         continue
 
+    if "Location" in line and new_id:
+        ind_location = line.find("Location")
+        paths.append(line[ind_location+10:line.find(':', ind_location+10)])
+        line_numbers.append(line[line.find(':', ind_location+10)+1:-1])
 
-list_vulns = []    # (ID, Source, Sink)
+
+list_vulns = []    # (ID, Source, Sink, Path, Line #)
 for i in range(len(vuln_ids)):
     if sources[i].__contains__("("):
         sources[i] = sources[i].replace("(", "")
@@ -51,7 +59,7 @@ for i in range(len(vuln_ids)):
     if sources[i].__contains__(" "):
         sources[i] = sources[i].replace(" ", "")
 
-    list_vulns.append((vuln_ids[i], sources[i], sinks[i]))
+    list_vulns.append((vuln_ids[i], sources[i], sinks[i], paths[i], line_numbers[i]))
     print list_vulns[i]
 
 
