@@ -14,7 +14,7 @@ def create_table():
 
 def insert_into_table(name, age):  # Vulnerable
     # Insert a row of data
-    c.execute("INSERT INTO people (name, age) values (?, ?)", (name, age))
+    c.execute("INSERT INTO people (name, age) VALUES (?, ?)", (name, age))
     return 0
 
 def close_db():
@@ -24,8 +24,8 @@ def close_db():
     return 0
 
 
-def read_db():
-    c.execute('SELECT * FROM people')
+def read_db(name):
+    c.execute("SELECT * FROM people WHERE name = '%s'" % name)
     print(c.fetchone())
     return 0
 
@@ -37,12 +37,14 @@ def main():
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
 
-    name = input("Please enter a name\n")
-    age = input("Please enter the age\n")
+    name = raw_input("Please enter a name\n")
+    age = raw_input("Please enter the age\n")
+
 
     # SQL
     create_table()
     insert_into_table(name, age)
+    read_db(name)
     close_db()
 
 
