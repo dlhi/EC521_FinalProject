@@ -44,4 +44,6 @@ for node in ast.walk(readin):
     if isinstance(node, ast.FunctionDef):
         print(node.name)
 
-a = GlobalUseCollector('s').visit(readin)
+command_line = sys.argv[2]
+
+a = GlobalUseCollector(command_line).visit(readin)
