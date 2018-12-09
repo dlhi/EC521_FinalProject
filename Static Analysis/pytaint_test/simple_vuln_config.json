@@ -1,0 +1,10 @@
+{   
+    "cleaners": [
+        {"merit": "ShellMerit"},
+         "fake_sanitize"],
+    "sinks": [
+      {"merit": "ShellMerit"},
+       "os.system"],
+    "sources": [
+      "inputed"]
+  }
