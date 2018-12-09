@@ -9,6 +9,12 @@ Works with Pytaint - taint error triggered
 import os
 import taint
 import pipes
+class temp():
+    def tempor():
+        return 0
+
+    def ticktick():
+        return 1
 
 class ShellMerit(Merit):
   '''A string has been cleaned for usage as a shell parameter'''
