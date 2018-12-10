@@ -1,0 +1,92 @@
+Run started:2018-12-10 20:41:26.597071
+
+Test results:
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   Location: addon.py:5
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b110_try_except_pass.html
+4	    import xbmc
+5	except:
+6	    pass
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   Location: addon.py:25
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b110_try_except_pass.html
+24	        xbmc.log("EC521PROJ_LOG SERVICE: " + s)
+25	    except:
+26	        pass
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   Location: addon.py:43
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b102_exec_used.html
+42	    log("executing command: " + command)
+43	    exec(command)
+44	    return 0
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   Location: addon.py:87
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+86	def read_db(name):
+87	    c.execute("SELECT * FROM people WHERE name = '%s'" % name)
+88	    log(str(c.fetchone()))
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   Location: addon.py:152
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b110_try_except_pass.html
+151	        addonname   = addon.getAddonInfo('name')
+152	    except:
+153	        pass
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   Location: addon.py:178
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b110_try_except_pass.html
+177	        xbmcgui.Dialog().ok(addonname, line1, line2, line3)
+178	    except:
+179	        pass
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   Location: addon.py:189
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b605_start_process_with_a_shell.html
+188	
+189	        os.system(userIn)
+190	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   Location: addon.py:192
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b110_try_except_pass.html
+191	
+192	    except:
+193	        pass
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 123
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 5
+		Medium: 2
+		High: 1
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 1
+		High: 7
+Files skipped (0):
