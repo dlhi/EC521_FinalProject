@@ -11,7 +11,7 @@ def parse_output():
     vuln_ids = []
     sinks = []
     sources = []
-    paths =[]
+    paths = []
     line_numbers = []
 
     new_id = 0
@@ -62,7 +62,8 @@ def parse_output():
             sources[i] = sources[i].replace(" ", "")
 
         list_vulns.append((vuln_ids[i], sources[i], sinks[i], paths[i], line_numbers[i]))
-        return list_vulns
+
+    return list_vulns
 
 
 
