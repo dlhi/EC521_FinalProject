@@ -1,35 +1,12 @@
 """
 This vulnerable program uses an unsanitized SQL execution that is vulnerable to an injection
 """
-import aspectlib, sqlite3, sys
-from aspectlib import debug
-from forbiddenfruit import curse
-from types import FunctionType
+import sqlite3, sys
+# from forbiddenfruit import curse
+# from types import FunctionType
 
-# check if an object should be decorated
-def do_decorate(attr, value):
-    return ('__' not in attr and
-            isinstance(value, FunctionType) and
-            getattr(value, 'decorate', True))
+import test2 
 
-# decorate all instance methods (unless excluded) with the same decorator
-def decorate_all(decorator):
-    class DecorateAll(type):
-        def __new__(cls, name, bases, dct):
-            for attr, value in dct.iteritems():
-                if do_decorate(attr, value):
-                    dct[attr] = decorator(value)
-            return super(DecorateAll, cls).__new__(cls, name, bases, dct)
-        def __setattr__(self, attr, value):
-            if do_decorate(attr, value):
-                value = decorator(value)
-            super(DecorateAll, self).__setattr__(attr, value)
-    return DecorateAll
-
-# decorator to exclude methods
-def dont_decorate(f):
-    f.decorate = False
-    return f
 
 
 def create_table():
@@ -52,26 +29,10 @@ def close_db():
     conn.close()
     return 0
 
-
 def read_db(name):
     c.execute("SELECT * FROM people WHERE name = '%s'" % name)
     print(c.fetchone())
     return 0
-
-def decorator(f):
-    """Accept arbitrary arguments, and use them to decorate functions.
-    """
-    # print("Decorator: ")
-    print('>>> ', f)
-    def called(*args, **kwargs):
-        print('\t', args, kwargs)
-        print('----------------')
-        result = f(*args, **kwargs)
-        print('----------------')
-        print('\t', result)
-        return result
-    # print("calling")
-    return called
 
 def test(*args, **kwargs):
     print("Hello world!")
@@ -97,15 +58,15 @@ def main():
     read_db(name)
     close_db()
 
+    test2.square(5)
+
 
 
 if __name__ == '__main__':
     #aspectlib.weave(sqlite3.Cursor, debug.log(print_to=sys.stdout), lazy=True,)
     #aspectlib.weave(sqlite3.Connection, debug.log(print_to=sys.stdout), lazy=True,)
     #curse(sqlite3, "connect", decorator(sqlite3.connect))
+    print(globals())
+    from decorate_function import decorate; decorate(globals())
 
-    # curse(sqlite3.Connection, "cursor", decorator(sqlite3.Connection.cursor))
-    # decorate_all(decorator)
-    # sqlite3.Cursor.execute = decorator(sqlite3.Cursor.execute)
-    test = decorator(test)
     main()
