@@ -1,5 +1,7 @@
 import ast
 import sys
+import system_vuln
+import dis
 
 from optparse import OptionParser
 import inspect
@@ -55,16 +57,27 @@ def functionFinder(parsed_ast):
         if isinstance(node, ast.ClassDef):
             for entries in node.body:
                 if isinstance(entries, ast.FunctionDef):
-                    print(entries.name)
+                    # print(entries.name)
                     if node.name not in dictionary:
                         dictionary[node.name] = []
                     dictionary[node.name].append((entries.name, entries.lineno))
 
         if isinstance(node, ast.FunctionDef):
-            print(node.name)
+            # print(node.name)
             function_list.append(node.name)
 
     return dictionary, function_list
+
+def list_func_calls(fn):
+    funcs = []
+    bytecode = dis.Bytecode(fn)
+    instrs = list(reversed([instr for instr in bytecode]))
+    for (ix, instr) in enumerate(instrs):
+        if instr.opname=="CALL_FUNCTION":
+            load_func_instr = instrs[ix + instr.arg + 1]
+            funcs.append(load_func_instr.argval)
+
+    return ["%s" % (funcname) for (ix, funcname) in enumerate(reversed(funcs), 1)]
 
 def parseAST(filename, variable_key):
     object_ast = GlobalUseCollector(variable_key)
@@ -75,9 +88,19 @@ def parseAST(filename, variable_key):
     variable_occurances = object_ast.variables
     dictionar, func_list = functionFinder(parsed_ast)
 
-    return dictionar, variable_occurances, func_list
+    for internalFunc in func_list:
+        directory = 'system_vuln.' + str(internalFunc)
+        try:
+            array_to_parse = list_func_calls(eval(directory))
+            for intFunc in array_to_parse:
+                if intFunc not in func_list:
+                    func_list.append(intFunc)
+        except:
+            pass
+            # print(internalFunc, " does not have an internal function!")
 
-import system_vuln
+    print(func_list)
+    return dictionar, variable_occurances, func_list
 
 def main():
 
@@ -86,22 +109,5 @@ def main():
     print(v)
     print(f)
     
-    import dis
-    def list_func_calls(fn):
-        funcs = []
-        bytecode = dis.Bytecode(fn)
-        instrs = list(reversed([instr for instr in bytecode]))
-        for (ix, instr) in enumerate(instrs):
-            if instr.opname=="CALL_FUNCTION":
-                load_func_instr = instrs[ix + instr.arg + 1]
-                funcs.append(load_func_instr.argval)
-
-        return ["%d. %s" % (ix, funcname) for (ix, funcname) in enumerate(reversed(funcs), 1)]
-    print(list_func_calls(eval('system_vuln.main')))
-
-
-
-
-
 if __name__ == '__main__':
     main()
