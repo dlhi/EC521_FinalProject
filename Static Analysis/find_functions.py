@@ -22,17 +22,8 @@ def find():
                 else:
                     for func in list_functions:
                         if func in line:
-                            count = 0
                             ind_first = line.find(func)
-                            if line[ind_first-1] == '.':
-                                for x in range(10):
-                                    if line[ind_first-x] != ' ' and line[ind_first-x] != '(':
-                                        count += 1
-                                    else:
-                                        break
-                                variable_functions.append(line[ind_first - count + 1:ind_first + len(func)])
-                            else:
-                                variable_functions.append(func)
+                            variable_functions.append(func)
 
         dict_return[bandit_output[ind][3]] = variable_functions
     print(dict_return)
