@@ -1,0 +1,38 @@
+Run started:2018-12-10 07:33:18.823057
+
+Test results:
+>> Issue: [B322:blacklist] The input method in Python 2 will read from standard input, evaluate and run the resulting string as python source code. This is similar, though in many ways worse, then using eval. On Python 2, use raw_input instead, input is safe in Python 3.
+   Severity: High   Confidence: High
+   Location: system_vuln.py:8
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b322-input
+7	def main():
+8	    a = input("Enter a command\n")
+9	    b = 1 + 1                       # Fillers
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
+   Severity: High   Confidence: High
+   Location: system_vuln.py:12
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b605_start_process_with_a_shell.html
+11	    d = b - c                       # Fillers
+12	    os.system(a)
+13	
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 12
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0.0
+		Low: 0.0
+		Medium: 0.0
+		High: 2.0
+	Total issues (by confidence):
+		Undefined: 0.0
+		Low: 0.0
+		Medium: 0.0
+		High: 2.0
+Files skipped (0):
