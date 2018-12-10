@@ -1,18 +1,19 @@
 import fileinput
-import shutil
+from shutil import copyfile
+import sys
 
 def append_decorate(filename):
     string = filename[:-3] + '_cpy.py'
-    shutil.copy2(filename, string)  
+    copyfile(filename, string)  
     processing_foo1s = False
     placed_in = 0
 
     for line in fileinput.input(string, inplace=1):
-        if line.startswith("if __name__ == '__main__':"):
+        if line.startswith("if __name__"):
             processing_foo1s = True
         else:
             if processing_foo1s:
-                print '\tfrom decorate_function import decorate; decorate(globals())'
+                print "\tfrom decorate_function import decorate; decorate(globals())"
                 placed_in = 1
             processing_foo1s = False
         print line,
@@ -22,7 +23,8 @@ def append_decorate(filename):
             myfile.write("from decorate_function import decorate; decorate(globals())")
 
 def main():
-    append_decorate("system_vuln.py")
+    filename = sys.argv[1]
+    append_decorate(filename)
 
 if __name__ == '__main__':
     main()
