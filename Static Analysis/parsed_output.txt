@@ -1,0 +1,1 @@
+('B605', 'e', 'os.system', 'system_vuln.py', '30')

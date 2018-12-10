@@ -1,4 +1,4 @@
-#!/Users/andregonzaga/Desktop/pytaint/Python-2.7.5-pytaint/python.exe
+#!/home/david/Desktop/EC521_Project/pytaint/Python-2.7.5-pytaint/python
 """
 This script  extracts relevant information from a text file that contains output from bandit
 """
