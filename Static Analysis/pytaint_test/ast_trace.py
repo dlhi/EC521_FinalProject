@@ -1,7 +1,7 @@
 import ast
 import sys
-import system_vuln
 import dis
+import importlib
 
 from optparse import OptionParser
 import inspect
@@ -80,6 +80,9 @@ def list_func_calls(fn):
     return ["%s" % (funcname) for (ix, funcname) in enumerate(reversed(funcs), 1)]
 
 def parseAST(filename, variable_key):
+    locals()[filename[:-3]] = importlib.import_module(filename[:-3])
+    print(locals())
+
     object_ast = GlobalUseCollector(variable_key)
 
     parsed_ast = read_file(filename)
@@ -89,7 +92,7 @@ def parseAST(filename, variable_key):
     dictionar, func_list = functionFinder(parsed_ast)
 
     for internalFunc in func_list:
-        directory = 'system_vuln.' + str(internalFunc)
+        directory = filename[:-2] + str(internalFunc)
         try:
             array_to_parse = list_func_calls(eval(directory))
             for intFunc in array_to_parse:
@@ -103,7 +106,6 @@ def parseAST(filename, variable_key):
     return dictionar, variable_occurances, func_list
 
 def main():
-
     d, v, f = parseAST("system_vuln.py", 'f')
     print(d)
     print(v)
