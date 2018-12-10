@@ -35,7 +35,7 @@ def parse_output():
             ind_execute = line.find("execute")
             ind_last_space = line.rfind(' ', 0, ind_execute)
             sinks.append(line[ind_last_space+1:ind_execute] + "execute")
-            sources.append(sinks[-1][0:sinks[-1].find('.')])
+            sources.append(line[line.rfind('%', ind_execute)+1:line.find(')')])
             new_id = 0
             continue
 
@@ -63,7 +63,10 @@ def parse_output():
 
         list_vulns.append((vuln_ids[i], sources[i], sinks[i], paths[i], line_numbers[i]))
 
+    print(list_vulns)
     return list_vulns
 
 
 
+if __name__ == '__main__':
+    parse_output()
