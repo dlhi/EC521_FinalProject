@@ -86,8 +86,6 @@ def parseAST(filename, variable_key):
     
     # import system_vuln
     locals()[filename[:-3]] = importlib.import_module(filename[:-3])
-    # print(locals())
-
     object_ast = GlobalUseCollector(variable_key)
 
     parsed_ast = read_file(filename)
@@ -107,7 +105,6 @@ def parseAST(filename, variable_key):
             pass
             # print(internalFunc, " does not have an internal function!")
 
-    # print(func_list)
     return dictionar, variable_occurances, func_list
 
 def main():
