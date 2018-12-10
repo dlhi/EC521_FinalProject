@@ -3,7 +3,6 @@ This vulnerable program uses the Python exec function which takes in a string an
 """
 
 import aspectlib, sys
-import __builtin__
 from aspectlib import debug
 
 

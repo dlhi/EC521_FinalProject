@@ -55,11 +55,13 @@ def functionFinder(parsed_ast):
         if isinstance(node, ast.ClassDef):
             for entries in node.body:
                 if isinstance(entries, ast.FunctionDef):
+                    print(entries.name)
                     if node.name not in dictionary:
                         dictionary[node.name] = []
                     dictionary[node.name].append((entries.name, entries.lineno))
 
         if isinstance(node, ast.FunctionDef):
+            print(node.name)
             function_list.append(node.name)
 
     return dictionary, function_list
@@ -75,11 +77,31 @@ def parseAST(filename, variable_key):
 
     return dictionar, variable_occurances, func_list
 
+import system_vuln
+
 def main():
+
     d, v, f = parseAST("system_vuln.py", 'f')
-    print d
-    print v
-    print f
+    print(d)
+    print(v)
+    print(f)
+    
+    import dis
+    def list_func_calls(fn):
+        funcs = []
+        bytecode = dis.Bytecode(fn)
+        instrs = list(reversed([instr for instr in bytecode]))
+        for (ix, instr) in enumerate(instrs):
+            if instr.opname=="CALL_FUNCTION":
+                load_func_instr = instrs[ix + instr.arg + 1]
+                funcs.append(load_func_instr.argval)
+
+        return ["%d. %s" % (ix, funcname) for (ix, funcname) in enumerate(reversed(funcs), 1)]
+    print(list_func_calls(eval('system_vuln.main')))
+
+
+
+
 
 if __name__ == '__main__':
     main()

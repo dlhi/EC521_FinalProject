@@ -7,7 +7,7 @@ Works with Pytaint - taint error triggered
 """
 
 import os
-import taint
+# import taint
 import pipes
 class temp():
     def tempor():
@@ -16,9 +16,9 @@ class temp():
     def ticktick():
         return 1
 
-class ShellMerit(Merit):
-  '''A string has been cleaned for usage as a shell parameter'''
-  propagation = Merit.FullPropagation
+# class ShellMerit(Merit):
+#   '''A string has been cleaned for usage as a shell parameter'''
+#   propagation = Merit.FullPropagation
 
 # input() for user input does not work with taint analysis
 
@@ -29,7 +29,7 @@ def inputed():
     return raw_input()
 
 def main():
-    taint.enable('simple_vuln_config.json')
+    # taint.enable('simple_vuln_config.json')
 
     e = inputed()
     f = fake_sanitize(e)
@@ -44,3 +44,4 @@ if __name__ == '__main__':
     main()
     x = 1 + 2
     y = 2 + x 
+    
