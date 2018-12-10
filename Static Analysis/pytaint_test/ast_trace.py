@@ -80,8 +80,13 @@ def list_func_calls(fn):
     return ["%s" % (funcname) for (ix, funcname) in enumerate(reversed(funcs), 1)]
 
 def parseAST(filename, variable_key):
+    # importlib.import_module(filename[:-3])
+    # getattr(__import__(filename[:-3]), 'random')
+    # import system_vuln
+    
+    # import system_vuln
     locals()[filename[:-3]] = importlib.import_module(filename[:-3])
-    print(locals())
+    # print(locals())
 
     object_ast = GlobalUseCollector(variable_key)
 
@@ -102,7 +107,7 @@ def parseAST(filename, variable_key):
             pass
             # print(internalFunc, " does not have an internal function!")
 
-    print(func_list)
+    # print(func_list)
     return dictionar, variable_occurances, func_list
 
 def main():
