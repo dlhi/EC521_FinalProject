@@ -1,5 +1,10 @@
-import xbmcaddon
-import xbmcgui
+try:
+    import xbmcaddon
+    import xbmcgui
+    import xbmc
+except:
+    pass
+
 import socket, sys
 import struct
 from optparse import OptionParser
@@ -9,17 +14,16 @@ import shlex
 import time
 import datetime
 import os
-import xbmc
 import math
 
 
 
-addon       = xbmcaddon.Addon()
-addonname   = addon.getAddonInfo('name')
-
 # Access log file: /users/chaseclarke/Library/Logs
 def log(s):
-    xbmc.log("EC521PROJ_LOG SERVICE: " + s)
+    try:
+        xbmc.log("EC521PROJ_LOG SERVICE: " + s)
+    except:
+        pass
     return 0
 
 line1 = "This is our demo:"
@@ -39,7 +43,7 @@ def callExec(command):
     exec(command)
     return 0
 
-callExec("print('hi')")
+
 
 ################## ################## ##################
 
@@ -54,9 +58,6 @@ def Sockets(httpRec):
     s.close()
     return 0
 
-http = b'GET / HTTP/1.1\r\nHost: google.com\r\n\r\n'
-log(http)
-Sockets(http)
 
 ################## ################## ##################
 
@@ -101,13 +102,10 @@ def SQLVuln(name, age):
     close_db()
 
 
-#creating the database
-SQLVuln("chase", 20)
 
 ################## ################## ##################
 
-# printing to the popup window
-xbmcgui.Dialog().ok(addonname, line1, line2, line3)
+
 
 
 
@@ -144,23 +142,60 @@ def GUIEditExportName(name):
     return(name)
 
 
-userIn = GUIEditExportName("")
-
-#os.system("ls")
-#os.system(userIn)
-#exec(userIn1)
-
-userIn1 = sanitize(userIn)
-log(userIn1)
-
-os.system(userIn)
-
-
-
-
 ################## ################## ##################
 
-# end spam to log
-for i in range(10):
-    log(str(i))
+def main():
+    
+    try:
+        addon       = xbmcaddon.Addon()
+        addonname   = addon.getAddonInfo('name')
+    except:
+        pass
+    
+    line1 = "This is our demo:"
+    line2 = "  we are demonstrating some common"
+    line3 = "  vulnerabilities in this file."
+
+
+    #spamming log so output can be easily seen
+    log("      ~ these numbers are written to find file output with ease ~ ")
+    for i in range(10):
+        log(str(i))
+    
+    callExec("print('hi')")
+
+    http = b'GET / HTTP/1.1\r\nHost: google.com\r\n\r\n'
+    log(http)
+    Sockets(http)
+
+    #creating the database
+    SQLVuln("chase", 20)
+
+
+    try:
+        # printing to the popup window
+        xbmcgui.Dialog().ok(addonname, line1, line2, line3)
+    except:
+        pass
+
+    try:
+        userIn = GUIEditExportName("")
+        userIn1 = sanitize(userIn)
+        log(userIn1)
+        #os.system("ls")
+        #os.system(userIn)
+        #exec(userIn1)
+
+        os.system(userIn)
+
+
+    except:
+        pass
+    # end spam to log
+    for i in range(10):
+        log(str(i))
+
+if __name__ == '__main__':
+    from decorate_function import decorate; decorate(globals())
+    main()
 

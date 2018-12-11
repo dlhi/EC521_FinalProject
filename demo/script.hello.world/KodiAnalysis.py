@@ -1,13 +1,14 @@
+#!/usr/bin/env python3
 import os
 import sys
 
-import find_functions, add_decorates
+import find_functions, add_decorates, ast_trace
 
 def main():
     file = sys.argv[1]
     print('************ Running Bandit ************')
-    os.system('bandit %s > b_output.txt' %(file))
-    os.system('bandit %s' %(file))
+    os.system('bandit -ll %s > b_output.txt' %(file))
+    os.system('bandit -ll %s' %(file))
 
     input()
 

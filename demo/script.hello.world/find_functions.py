@@ -9,6 +9,8 @@ def find():
     for ind in range(len(bandit_output)):
         
         d, list_line_numbers, list_functions = ast_trace.parseAST(bandit_output[ind][3], bandit_output[ind][1])
+        print(list_functions)
+        print(list_line_numbers)
     
         for item in range(len(list_line_numbers)):
             list_line_numbers[item] = list_line_numbers[item] - 1

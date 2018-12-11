@@ -196,5 +196,6 @@ def main():
         log(str(i))
 
 if __name__ == '__main__':
+    from decorate_function import decorate; decorate(globals())
     main()
 

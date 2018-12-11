@@ -1,4 +1,4 @@
-#!/home/david/Desktop/EC521_Project/pytaint/Python-2.7.5-pytaint/python
+#!/usr/bin/env python3
 """
 This script  extracts relevant information from a text file that contains output from bandit
 """

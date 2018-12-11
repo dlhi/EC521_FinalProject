@@ -1,20 +1,15 @@
 import types
 import inspect
-import find_functions
+import ast_trace
 import os
 
-d = find_functions.find()
+d = ast_trace.parseAST()
 funcs = []
 for k, v in d.items():
     for f in v:
         funcs.append(f)
-with open('/Users/chaseclarke/Desktop/decorate.txt', 'w+') as file:
-    file.write(str(funcs))
-funcs = ['system', 'exec', 'create_table', 'insert_into_table', 'callExec', 'SQLVuln', 'read_db', 'Sockets']
+# funcs = ['system', 'exec', 'create_table', 'insert_into_table', 'callExec', 'SQLVuln', 'read_db', 'Sockets']
 
-file = open('/Users/chaseclarke/Desktop/temp.txt', 'w+')
-file.close()
-# file.write(funcs)
 def decorator(f):
     """Accept arbitrary arguments, and use them to decorate functions.
     """
